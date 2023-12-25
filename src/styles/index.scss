@@ -38,6 +38,7 @@
     background-color: yellow;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
+    display: flex;
 }
 .logo{
     width: 40px;
@@ -48,4 +49,37 @@
     font-weight: bold;
     font-size: 25px;
     margin-left: 10px;
+}
+.navigation{
+    background-color: $dark-grey-background;
+    height: 100%;
+    width: 300px;
+}
+.list-item{
+    list-style-type: none;
+    padding-inline: 30px;
+    padding-block: 15px;
+    color: $white;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 10px;
+    &.active{
+        background-color: $black-background;
+        position: relative;
+        
+        &:before{
+            content: "";
+            display: block;
+            width: 4px;
+            height: 100%;
+            background-color: $nav-active-item-color;
+            position: absolute;
+            left: 0;
+        }
+    }
+}
+.nav-icon{
+    width: 30px;
+    height: 30px;
 }
