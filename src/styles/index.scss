@@ -1,4 +1,7 @@
 @import "./variables.scss"; 
+@import "../components/ui/Input/style";
+@import "../components/ui/Button/style";
+@import "../components/ui/Icon/style";
 *{
     padding: 0;
     margin: 0;
@@ -82,4 +85,20 @@
 .nav-icon{
     width: 30px;
     height: 30px;
+}
+.tasks-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    width: 100%;
+    padding: 20px;
+    background-color: $black-background;
+}
+.place-input-to-right{
+    margin-right: 10px;
+    margin-left: auto;
+}
+.tasks-headline{
+    color: $white;
 }
