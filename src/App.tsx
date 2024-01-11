@@ -14,7 +14,7 @@ export const App = () => {
             <div className="test">
                 <BrowserRouter>
                     <nav className="navigation">
-                        <ul>
+                        <ul className="navigation-list">
                             <li>
                                 <NavLink className="list-item" to="/">
                                     <Icon
