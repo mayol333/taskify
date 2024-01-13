@@ -3,7 +3,7 @@ import { Button } from "../ui/Button/Button";
 import axios from "axios";
 import { Icon } from "../ui/Icon/Icon";
 import { Task } from "../ui/Task/Task";
-import { useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { TaskType } from "../ui/Task/types";
 
 export interface Task {
@@ -28,6 +28,11 @@ export const Tasks = () => {
         };
         getTasks();
     }, []);
+    const [search, setSearch] = useState("");
+    const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
+        const { value } = event.target;
+        setSearch(value);
+    };
     return (
         <section className="tasks-section">
             <div className="tasks-header">
@@ -36,8 +41,8 @@ export const Tasks = () => {
                     <Input
                         placeholder="Search"
                         isSearch={true}
-                        value=""
-                        onChange={() => {}}
+                        value={search}
+                        handleSearch={handleSearch}
                     />
                 </div>
                 <Button>
@@ -46,19 +51,23 @@ export const Tasks = () => {
                 </Button>
             </div>
             <div className="tasks-data">
-                {tasks.map((task) => {
-                    return (
-                        <Task
-                            title={task.title}
-                            date={task.date}
-                            startTime={task.startTime}
-                            endTime={task.endTime}
-                            taskType={task.taskType}
-                            complete={task.complete}
-                            key={task.id}
-                        />
-                    );
-                })}
+                {tasks
+                    .filter((task) => {
+                        return task.title.includes(search);
+                    })
+                    .map((task) => {
+                        return (
+                            <Task
+                                title={task.title}
+                                date={task.date}
+                                startTime={task.startTime}
+                                endTime={task.endTime}
+                                taskType={task.taskType}
+                                complete={task.complete}
+                                key={task.id}
+                            />
+                        );
+                    })}
             </div>
         </section>
     );

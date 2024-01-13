@@ -6,7 +6,7 @@ export const Input = ({
     label,
     error,
     value,
-    onChange,
+    handleSearch,
 }: InputProps) => {
     return (
         <div>
@@ -21,7 +21,7 @@ export const Input = ({
                     placeholder={placeholder}
                     type="text"
                     value={value}
-                    onChange={onChange}
+                    onChange={handleSearch}
                     id="input"
                 />
                 {isSearch && <Icon type="search" className="search" />}
