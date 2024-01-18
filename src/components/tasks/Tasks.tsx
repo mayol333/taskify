@@ -5,6 +5,9 @@ import { Icon } from "../ui/Icon/Icon";
 import { Task } from "../ui/Task/Task";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { TaskType } from "../ui/Task/types";
+import { Modal } from "../ui/Modal/Modal";
+import { useModalState } from "../ui/Modal/hooks";
+import { NewTaskForm } from "../Forms/NewTaskForm";
 
 export interface Task {
     id: number;
@@ -16,6 +19,7 @@ export interface Task {
     taskType: TaskType;
 }
 export const Tasks = () => {
+    const { modalOpen, handleModalOpen, handleModalClose } = useModalState();
     const [tasks, setTasks] = useState<Task[]>([]);
     useEffect(() => {
         const getTasks = async () => {
@@ -33,6 +37,7 @@ export const Tasks = () => {
         const { value } = event.target;
         setSearch(value);
     };
+    console.log(modalOpen);
     return (
         <section className="tasks-section">
             <div className="tasks-header">
@@ -42,13 +47,19 @@ export const Tasks = () => {
                         placeholder="Search"
                         isSearch={true}
                         value={search}
-                        handleSearch={handleSearch}
+                        onChange={handleSearch}
                     />
                 </div>
-                <Button>
+                <Button onClick={handleModalOpen}>
                     <Icon type="plus" className="plus-icon" />
-                    sdfsdfsd
+                    New Task
                 </Button>
+                <Modal
+                    modalOpen={modalOpen}
+                    handleModalClose={handleModalClose}
+                >
+                    <NewTaskForm />
+                </Modal>
             </div>
             <div className="tasks-data">
                 {tasks

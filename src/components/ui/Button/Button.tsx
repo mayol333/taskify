@@ -1,5 +1,8 @@
-import { PropsWithChildren } from "react";
-
-export const Button = ({ children }: PropsWithChildren) => {
-    return <button className="button">{children}</button>;
+import { ButtonProps } from "./types";
+export const Button = ({ children, onClick }: ButtonProps) => {
+    return (
+        <button onClick={onClick} className="button">
+            {children}
+        </button>
+    );
 };
