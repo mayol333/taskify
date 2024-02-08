@@ -1,7 +1,10 @@
 import { TaskProps } from "./types";
 import { Icon } from "../Icon/Icon";
 import { ChangeEventHandler, useState } from "react";
-
+import { useModalState } from "../Modal/hooks";
+import { DeleteTaskForm } from "../../Forms/DeleteTaskForm/DeleteTaskForm";
+import { Modal } from "../Modal/Modal";
+import { EditTaskForm } from "../../Forms/EditTaskForm/EditTaskForm";
 export const Task = ({
     title,
     date,
@@ -9,7 +12,16 @@ export const Task = ({
     endTime,
     complete,
     taskType,
+    handleDelete,
+    taskId,
+    submitEdit,
 }: TaskProps) => {
+    const { modalOpen, handleModalOpen, handleModalClose } = useModalState();
+    const {
+        modalOpen: editModalOpen,
+        handleModalOpen: handleEditModalOpen,
+        handleModalClose: handleEditModalClose,
+    } = useModalState();
     const typeStringTransform = {
         fitnessApp: "Fitness app",
         newPayment: "New payment",
@@ -29,6 +41,14 @@ export const Task = ({
     const [showEdit, setShowEdit] = useState(false);
     const handleToggleEdit = () => {
         setShowEdit(!showEdit);
+    };
+    const openEdit = () => {
+        handleEditModalOpen();
+        setShowEdit(false);
+    };
+    const openDelete = () => {
+        handleModalOpen();
+        setShowEdit(false);
     };
     return (
         <div className={`task-board-container ${isChecked}`}>
@@ -57,11 +77,48 @@ export const Task = ({
                         <Icon onClick={handleToggleEdit} type="edit" />
                         {showEdit && (
                             <div className="edit-content">
-                                <button className="task-edit">edit</button>
-                                <button className="task-delete">delete</button>
+                                <button
+                                    onClick={openEdit}
+                                    className="task-edit"
+                                >
+                                    edit
+                                </button>
+                                <button
+                                    onClick={openDelete}
+                                    className="task-delete"
+                                >
+                                    delete
+                                </button>
                             </div>
                         )}
                     </div>
+                    <Modal
+                        modalOpen={modalOpen}
+                        handleModalClose={handleModalClose}
+                    >
+                        <DeleteTaskForm
+                            title={title}
+                            taskId={taskId}
+                            handleModalClose={handleModalClose}
+                            handleDelete={handleDelete}
+                        />
+                    </Modal>
+                    <Modal
+                        handleModalClose={handleEditModalClose}
+                        modalOpen={editModalOpen}
+                    >
+                        <EditTaskForm
+                            initialValues={{
+                                title,
+                                date,
+                                taskType,
+                                startTime,
+                                endTime,
+                            }}
+                            submit={submitEdit}
+                            taskId={taskId}
+                        />
+                    </Modal>
                 </div>
             </div>
         </div>

@@ -1,0 +1,9 @@
+.delete-task-form{
+    display: flex;
+    flex-direction: column;
+}
+.delete-cancel-buttons{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}

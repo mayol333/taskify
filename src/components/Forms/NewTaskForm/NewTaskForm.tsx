@@ -1,8 +1,16 @@
-import { DatePicker } from "../ui/DatePicker/DatePicker";
-import { Input } from "../ui/Input/Input";
-import { Select } from "../ui/Select/Select";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
-export const NewTaskForm = () => {
+import { DatePicker } from "../../ui/DatePicker/DatePicker";
+import { Input } from "../../ui/Input/Input";
+import { Select } from "../../ui/Select/Select";
+import {
+    ChangeEvent,
+    ChangeEventHandler,
+    FormEventHandler,
+    useState,
+} from "react";
+import { NewTaskFormProps } from "./types";
+import { Button } from "../../ui/Button/Button";
+
+export const NewTaskForm = ({ submit }: NewTaskFormProps) => {
     const [form, setForm] = useState({
         title: "",
         date: "",
@@ -22,8 +30,25 @@ export const NewTaskForm = () => {
     const handleDateChange = (date: string) => {
         setForm({ ...form, date });
     };
+    const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+        event.preventDefault();
+        if (
+            !form.title ||
+            !form.date ||
+            !form.taskType ||
+            !form.startTime ||
+            !form.endTime
+        ) {
+            return;
+        }
+        console.log(handleSubmit);
+        submit({
+            ...form,
+            select: "",
+        });
+    };
     return (
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit}>
             <h2 className="new-task-form-title">New Task Creator</h2>
             <Input
                 placeholder="Title"
@@ -51,6 +76,7 @@ export const NewTaskForm = () => {
                 value={form.endTime}
                 onChange={handleForm("endTime")}
             />
+            <Button>submit</Button>
         </form>
     );
 };

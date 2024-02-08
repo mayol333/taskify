@@ -4,8 +4,10 @@
 @import "../components/ui/Icon/style";
 @import "../components/ui/Task/style";
 @import "../components/ui/Modal/style";
-@import "../components/Forms/styles";
+@import "../components/Forms/NewTaskForm/styles.scss";
 @import "../components/ui/Select/styles";
+@import "../components/Forms/DeleteTaskForm/styles.scss";
+@import"../components/Forms/EditTaskForm/styles.scss";
 *{
     padding: 0;
     margin: 0;

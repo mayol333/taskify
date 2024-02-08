@@ -10,7 +10,6 @@ const Component = ({ value, onChange }: DatePickerProps) => {
     const handleDateChange = (date: Date) => {
         onChange(formatDate(date));
     };
-    console.log(selected);
     return (
         <DatePicker
             selected={selected}

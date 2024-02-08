@@ -1,0 +1,9 @@
+.form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.new-task-form-title{
+    color: $white;
+}
