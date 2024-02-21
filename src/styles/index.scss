@@ -8,6 +8,7 @@
 @import "../components/ui/Select/styles";
 @import "../components/Forms/DeleteTaskForm/styles.scss";
 @import"../components/Forms/EditTaskForm/styles.scss";
+@import"../components/ui/Meeting/style";
 *{
     padding: 0;
     margin: 0;
@@ -117,4 +118,26 @@
 }
 .navigation-list{
     list-style-type:none ;
+}
+.meetings-header-container{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.meetings-inputs-container{
+    display: flex;
+    margin-right: 10px;
+    margin-left: auto;
+    gap: 30px;
+    align-items: center;
+}
+.meetings-section{
+    width: 100%;
+    margin-inline: 20px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.meetings-headliner{
+    color: $white;
 }

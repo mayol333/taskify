@@ -1,0 +1,28 @@
+*{
+    color: $white;
+}
+.meeting-board{
+    display: flex;
+    background-color: $dark-grey-background;
+    width: 90%;
+    align-items: center;
+    margin-left: 30px;
+    margin-top: 40px;
+    border-radius: $border-radius;
+    padding: 30px;
+}
+.meeting-type{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 30px;;
+}
+.meeting-time{
+    display: flex;
+    margin-top: 20px;
+    gap: 20px;
+}
+.edit-meeting-icon{
+    margin-right: 10px;
+    margin-left: auto;
+}
