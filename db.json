@@ -64,7 +64,7 @@
       "taskType": "socialMedia"
     },
     {
-      "id": "1292aa51-1b61-438f-9aa6-b5a9bd6b1472",
+      "id": "1292aa51-1b61-438f-9aa6-b5a9bd6b5432",
       "title": "Plan next week's workouts",
       "date": "2024-01-20",
       "startTime": "14:00",
@@ -76,10 +76,10 @@
   "meetings": [
     {
       "id": "1392aa51-1b61-438f-9aa6-b5a9bd6b1472",
-      "title": "Plan next week's workouts",
+      "title": "Selling Stocks",
       "date": "2024-01-20",
       "startTime": "14:00",
-      "endTime": "15:00"
+      "endTime": "19:00"
     },
     {
       "id": "46323ac5-291e-495e-8c93-f7a1bf10dc8a",
