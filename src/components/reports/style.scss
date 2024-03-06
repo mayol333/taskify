@@ -1,0 +1,23 @@
+.chart-container{
+    width: 500px;
+    height: 500px;
+}
+.reports-container{
+    background-color: $dark-grey-background;
+    margin-top: 30px;
+}
+.master-container{
+    padding: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.charts-headline{
+    color: $white;
+    align-self: flex-start;
+}
+.select-container{
+    margin-top: 30px;
+    width: 300px
+}
