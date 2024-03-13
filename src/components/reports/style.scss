@@ -21,3 +21,32 @@
     margin-top: 30px;
     width: 300px
 }
+.reports-details-list{
+    color: $white;
+    display: flex;
+    width: 600px;
+    flex-direction: column;
+    overflow: auto;
+    margin-top: 30px;
+    gap: 30px;
+}
+.report-details{
+    display: flex;
+    flex-direction: row;
+    width: 500px;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+.report-date-headline{
+    font-weight: bold;
+    border-bottom:  1px solid $white;
+    padding-bottom: 20px;
+}
+.report-list-container{
+    border-radius: $border-radius;
+    background-color: $dark-grey-background;
+    padding: 30px;
+}
+.report-details-data-type{
+    width:70px
+}

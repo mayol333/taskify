@@ -71,6 +71,38 @@
       "endTime": "15:00",
       "complete": false,
       "taskType": "fitnessApp"
+    },
+    {
+      "id": "f94d4960-0d3d-4228-b654-846624a6d105",
+      "title": "Fixing reports",
+      "date": "2024-03-13",
+      "taskType": "newPayment",
+      "startTime": "18:00",
+      "endTime": "21:00"
+    },
+    {
+      "id": "75875432-34bf-45dc-b6dc-cc1d49754116",
+      "title": "Another to report",
+      "date": "2024-03-12",
+      "taskType": "fitnessApp",
+      "startTime": "14:00",
+      "endTime": "16:00"
+    },
+    {
+      "id": "4e4a4774-6a9b-41ca-959c-c97711e69092",
+      "title": "Run",
+      "date": "2024-03-11",
+      "taskType": "fitnessApp",
+      "startTime": "11:00",
+      "endTime": "17:30"
+    },
+    {
+      "id": "51feb0af-6af6-4965-9cbb-ab3d93dd10a7",
+      "title": "Swim",
+      "date": "2024-03-30",
+      "taskType": "fitnessApp",
+      "startTime": "12:15",
+      "endTime": "13:30"
     }
   ],
   "meetings": [
