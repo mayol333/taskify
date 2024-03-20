@@ -127,5 +127,25 @@
       "startTime": "15:00",
       "endTime": "16:00"
     }
+  ],
+  "activities": [
+    {
+      "title": "Working",
+      "content": "Lorem ipsum dolor sit amet. Et omnis blanditiis ex rerum dicta qui velit sint cum voluptatem inventore sit reprehenderit aliquid. Sit culpa ipsa aut voluptatem numquam aut sint aliquam ut corrupti necessitatibus ut similique illo eum omnis recusandae.",
+      "id": "3725a188-cbdc-478a-a8a0-7342c67c2g4e",
+      "createdAt": "14:00"
+    },
+    {
+      "title": "Sleeping",
+      "content": "Lorem ipsum dolor sit amet. Et omnis blanditiis ex rerum dicta qui velit sint cum voluptatem inventore sit reprehenderit aliquid. Sit culpa ipsa aut voluptatem numquam aut sint aliquam ut corrupti necessitatibus ut similique illo eum omnis recusandae.",
+      "id": "0925a188-cbdc-478a-a8a0-7342c67c2g4e",
+      "createdAt": "17:00"
+    },
+    {
+      "title": "Running",
+      "content": "Lorem ipsum dolor sit amet. Et omnis blanditiis ex rerum dicta qui velit sint cum voluptatem inventore sit reprehenderit aliquid. Sit culpa ipsa aut voluptatem numquam aut sint aliquam ut corrupti necessitatibus ut similique illo eum omnis recusandae.",
+      "id": "1225a188-cbdc-478a-a8a0-7342c67c2g4e",
+      "createdAt": "11:00"
+    }
   ]
 }

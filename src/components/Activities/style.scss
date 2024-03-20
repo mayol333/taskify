@@ -1,0 +1,27 @@
+.activities-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    width: 100%;
+    padding: 20px;
+    background-color: $black-background;
+}
+.place-input-to-right{
+    margin-right: 10px;
+    margin-left: auto;
+}
+.activities-headline{
+    color: $white;
+}
+.activities-section{
+    width: 100%;
+}
+.activities-data{
+    overflow: auto;
+    height: 960px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70px;
+}

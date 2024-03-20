@@ -1,0 +1,13 @@
+.activity-container{
+    background-color: $dark-grey-background;
+    border-radius: $border-radius;
+    margin-bottom: 30px;
+    width: 80%;
+    color: $white;
+    padding: 40px;
+}
+.title-created-style{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}

@@ -18,3 +18,12 @@ export const getMeetings = async () => {
         return[]
     }
 }
+export const getActivities = async () => {
+    try {
+        const {data} = await axios.get("http://localhost:8000/activities");
+        return data
+    } catch (error) {
+        console.log(error)
+        return[]
+    }
+}

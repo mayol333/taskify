@@ -1,6 +1,6 @@
 import { Icon } from "./components/ui/Icon/Icon";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
-import { Activity } from "./components/activity/Activity";
+import { Activities } from "./components/Activities/Activities";
 import { Meetings } from "./components/meetings/Meetings";
 import { Tasks } from "./components/tasks/Tasks";
 import { Reports } from "./components/reports/Reports";
@@ -63,7 +63,7 @@ export const App = () => {
                         <Route path="/" element={<Tasks />} />
                         <Route path="/meetings" element={<Meetings />} />
                         <Route path="/reports" element={<Reports />} />
-                        <Route path="/activity" element={<Activity />} />
+                        <Route path="/activity" element={<Activities />} />
                     </Routes>
                 </BrowserRouter>
             </div>
