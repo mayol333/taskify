@@ -93,43 +93,6 @@ const parseSpanData = (
     );
     return result;
 };
-const testData: ReportDetails[] = [
-    {
-        date: "2024-03-13",
-        details: [
-            {
-                startTime: "10:00",
-                endTime: "12:00",
-                totalTime: 2,
-                type: "Task",
-            },
-            {
-                startTime: "14:00",
-                endTime: "16:00",
-                totalTime: 2,
-                type: "Task",
-            },
-        ],
-    },
-    {
-        date: "2024-03-15",
-        details: [
-            {
-                startTime: "10:00",
-                endTime: "12:00",
-                totalTime: 2,
-                type: "Task",
-            },
-            {
-                startTime: "14:00",
-                endTime: "16:00",
-                totalTime: 2,
-                type: "Task",
-            },
-        ],
-    },
-];
-
 const timePeriod = (period: Period) => {
     switch (period) {
         case "today":
@@ -159,12 +122,35 @@ const getDayDetails = (
     timePeriodValue: string[]
 ) => {
     const [tasks, meetings] = tasksAndMeetings;
-    const filteredTasks = tasks.filter(({ date }) => {
-        return timePeriodValue.includes(date);
+    const arrayOfObjects = timePeriodValue.map((date) => {
+        const filteredTasks = tasks.filter((task) => {
+            return date === task.date;
+        });
+        const filteredMeetings = meetings.filter((meeting) => {
+            return date === meeting.date;
+        });
+        const finalTasks = filteredTasks.map(({ startTime, endTime }) => {
+            const totalTime = differenceInHours(startTime, endTime);
+            return {
+                startTime,
+                endTime,
+                totalTime,
+                type: "Task",
+            };
+        });
+        const finalMeetings = filteredMeetings.map(({ startTime, endTime }) => {
+            const totalTime = differenceInHours(startTime, endTime);
+            return {
+                startTime,
+                endTime,
+                totalTime,
+                type: "Meeting",
+            };
+        });
+        const details = [...finalTasks, ...finalMeetings];
+        return { date, details };
     });
-    const filteredMeetings = meetings.filter(({ date }) => {
-        return timePeriodValue.includes(date);
-    });
+    return arrayOfObjects;
 };
 export const Reports = () => {
     const [data, setData] = useState<ChartData | null>(null);
@@ -172,6 +158,7 @@ export const Reports = () => {
     const [tasksAndMeetings, setTasksAndMeetings] = useState<
         [Task[], MeetingType[]]
     >([[], []]);
+    const [report, setReport] = useState<ReportDetails[]>([]);
     const chartRef = useRef(null);
     const handleSelect: ChangeEventHandler<HTMLSelectElement> = (event) => {
         const { value } = event.target;
@@ -199,7 +186,11 @@ export const Reports = () => {
                 hours,
             });
         }
-        getDayDetails(tasksAndMeetings, timePeriodValue);
+        const reportDetails = getDayDetails(tasksAndMeetings, timePeriodValue);
+        const filledDetails = reportDetails.filter((detail) => {
+            return detail.details.length !== 0;
+        });
+        setReport(filledDetails);
     };
     useEffect(() => {
         const getData = async () => {
@@ -259,14 +250,20 @@ export const Reports = () => {
                 <div ref={chartRef} className="chart-container"></div>
             </div>
             <div className="reports-details-list">
-                {testData.map(({ date, details }) => {
+                {report.map(({ date, details }) => {
                     return (
-                        <div className="report-list-container">
+                        <div key={date} className="report-list-container">
                             <h3 className="report-date-headline">{date}</h3>
                             {details.map(
-                                ({ startTime, endTime, totalTime, type }) => {
+                                (
+                                    { startTime, endTime, totalTime, type },
+                                    index
+                                ) => {
                                     return (
-                                        <div className="report-details">
+                                        <div
+                                            key={`${date}-${index}`}
+                                            className="report-details"
+                                        >
                                             <p>
                                                 {startTime} - {endTime}
                                             </p>
