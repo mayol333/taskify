@@ -1,32 +1,22 @@
 import { Input } from "../ui/Input/Input";
 import { Button } from "../ui/Button/Button";
-import axios from "axios";
 import { Icon } from "../ui/Icon/Icon";
-import { Task } from "../ui/Task/Task";
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { TaskType } from "../ui/Task/types";
+import { ITask } from "../ui/Task/types";
 import { Modal } from "../ui/Modal/Modal";
 import { useModalState } from "../ui/Modal/hooks";
 import { NewTaskForm } from "../Forms/NewTaskForm/NewTaskForm";
-import { v4 as uuidv4 } from "uuid";
-import { FormState } from "../Forms/NewTaskForm/types";
-import { getTasks } from "../../services/services";
+import { NewTaskFormState } from "../Forms/NewTaskForm/types";
+import { EditTaskFormState } from "../Forms/EditTaskForm/types";
+import { tasksService } from "../../services/tasksService";
+import { Task } from "../ui/Task/Task";
 
-export interface Task {
-    id: string;
-    title: string;
-    date: string;
-    startTime: string;
-    endTime: string;
-    complete: boolean;
-    taskType: TaskType;
-}
 export const Tasks = () => {
     const { modalOpen, handleModalOpen, handleModalClose } = useModalState();
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const [tasks, setTasks] = useState<ITask[]>([]);
     useEffect(() => {
         const getTasksData = async () => {
-            const tasks = await getTasks();
+            const tasks = await tasksService.getTasks();
             setTasks(tasks);
         };
         getTasksData();
@@ -36,50 +26,23 @@ export const Tasks = () => {
         const { value } = event.target;
         setSearch(value);
     };
-    console.log(modalOpen);
-    const submit = async (formState: FormState) => {
-        try {
-            await axios.post("http://localhost:8000/tasks", {
-                id: uuidv4(),
-                title: formState.title,
-                date: formState.date,
-                taskType: formState.taskType,
-                startTime: formState.startTime,
-                endTime: formState.endTime,
-            });
-            const tasks = await getTasks();
-            setTasks(tasks);
-            handleModalClose();
-        } catch (error) {
-            console.log(error);
-        }
+    const submit = async (formState: NewTaskFormState) => {
+        await tasksService.createTask(formState);
+        const tasks = await tasksService.getTasks();
+        setTasks(tasks);
+        handleModalClose();
     };
-    const submitEdit = async (formState: FormState, taskId: string) => {
-        try {
-            await axios.patch(`http://localhost:8000/tasks/${taskId}`, {
-                title: formState.title,
-                date: formState.date,
-                taskType: formState.taskType,
-                startTime: formState.startTime,
-                endTime: formState.endTime,
-            });
-            const tasks = await getTasks();
-            setTasks(tasks);
-            handleModalClose();
-        } catch (error) {
-            console.log(error);
-        }
+    const submitEdit = async (formState: EditTaskFormState, taskId: string) => {
+        await tasksService.editTask(formState, taskId);
+        const tasks = await tasksService.getTasks();
+        setTasks(tasks);
+        handleModalClose();
     };
     const handleDelete = async (taskId: string) => {
-        try {
-            console.log(handleDelete);
-            await axios.delete(`http://localhost:8000/tasks/${taskId}/`);
-            const tasks = await getTasks();
-            setTasks(tasks);
-            handleModalClose();
-        } catch (error) {
-            console.log(error);
-        }
+        await tasksService.deleteTask(taskId);
+        const tasks = await tasksService.getTasks();
+        setTasks(tasks);
+        handleModalClose();
     };
     return (
         <section className="tasks-section">

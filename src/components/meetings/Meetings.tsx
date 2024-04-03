@@ -3,16 +3,15 @@ import { Button } from "../ui/Button/Button";
 import { Icon } from "../ui/Icon/Icon";
 import { Input } from "../ui/Input/Input";
 import { Select } from "../ui/Select/Select";
-import { getMeetings } from "../../services/services";
 import { useModalState } from "../ui/Modal/hooks";
 import { Modal } from "../ui/Modal/Modal";
 import { NewMeetingForm } from "../Forms/NewMeetingForm/NewMeetingForm";
-import axios from "axios";
-import { FormState } from "../Forms/NewMeetingForm/types";
-import { v4 as uuidv4 } from "uuid";
+import { NewMeetingFormState } from "../Forms/NewMeetingForm/types";
 import { MeetingType } from "../ui/Meeting/type";
 import { Meeting } from "../ui/Meeting/Meeting";
 import { parseISO } from "date-fns";
+import { meetingsService } from "../../services/meetingsService";
+import { EditMeetingFormState } from "../Forms/EditMeetingForm/types";
 
 export const Meetings = () => {
     const [searchMeeting, setMeetingSearch] = useState("");
@@ -21,7 +20,7 @@ export const Meetings = () => {
     const [meetings, setMeetings] = useState<MeetingType[]>([]);
     useEffect(() => {
         const getMeetingsData = async () => {
-            const meetings = await getMeetings();
+            const meetings = await meetingsService.getMeetings();
             setMeetings(meetings);
         };
         getMeetingsData();
@@ -34,47 +33,26 @@ export const Meetings = () => {
         const { value } = event.target;
         setSort(value);
     };
-    const submitEdit = async (formState: FormState, meetingId: string) => {
-        try {
-            await axios.patch(`http://localhost:8000/meetings/${meetingId}`, {
-                title: formState.title,
-                date: formState.date,
-                startTime: formState.startTime,
-                endTime: formState.endTime,
-            });
-            const meetings = await getMeetings();
-            setMeetings(meetings);
-            handleModalClose();
-        } catch (error) {
-            console.log(error);
-        }
+    const submitEdit = async (
+        formState: EditMeetingFormState,
+        meetingId: string
+    ) => {
+        await meetingsService.editMeeting(formState, meetingId);
+        const meetings = await meetingsService.getMeetings();
+        setMeetings(meetings);
+        handleModalClose();
     };
     const handleDelete = async (meetingsId: string) => {
-        try {
-            console.log(handleDelete);
-            await axios.delete(`http://localhost:8000/meetings/${meetingsId}/`);
-            const meetings = await getMeetings();
-            setMeetings(meetings);
-            handleModalClose();
-        } catch (error) {
-            console.log(error);
-        }
+        await meetingsService.deleteMeeting(meetingsId);
+        const meetings = await meetingsService.getMeetings();
+        setMeetings(meetings);
+        handleModalClose();
     };
-    const submit = async (formState: FormState) => {
-        try {
-            await axios.post("http://localhost:8000/meetings", {
-                id: uuidv4(),
-                title: formState.title,
-                date: formState.date,
-                startTime: formState.startTime,
-                endTime: formState.endTime,
-            });
-            const meetings = await getMeetings();
-            setMeetings(meetings);
-            handleModalClose();
-        } catch (error) {
-            console.log(error);
-        }
+    const submit = async (formState: NewMeetingFormState) => {
+        await meetingsService.createMeeting(formState);
+        const meetings = await meetingsService.getMeetings();
+        setMeetings(meetings);
+        handleModalClose();
     };
     const sortedMeetings = [...meetings].sort((a, b) => {
         switch (sort) {

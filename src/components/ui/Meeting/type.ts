@@ -1,4 +1,4 @@
-import { FormState } from "../../Forms/NewMeetingForm/types"
+import { EditMeetingFormState } from "../../Forms/EditMeetingForm/types"
 export interface MeetingProps {
     title:string
     date:string
@@ -6,7 +6,7 @@ export interface MeetingProps {
     endTime:string
     handleDelete: (meetingId: string) => void;
     meetingId: string;
-    submitEdit: (formState: FormState, meetingId: string) => Promise<void>;
+    submitEdit: (formState: EditMeetingFormState, meetingId: string) => Promise<void>;
 }
 export interface MeetingType {
     title: string;

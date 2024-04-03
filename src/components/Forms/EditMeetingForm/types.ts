@@ -1,7 +1,7 @@
 import { MeetingType } from "../../ui/Meeting/type"
 
-export type FormState = MeetingType 
+export type EditMeetingFormState = MeetingType 
 export interface EditMeetingFormProps {
-    submit: (formState: FormState, meetingId: string) => Promise<void>
+    submit: (formState: EditMeetingFormState, meetingId: string) => Promise<void>
     initialValues:MeetingType
 }

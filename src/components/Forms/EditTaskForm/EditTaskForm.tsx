@@ -9,6 +9,7 @@ import {
 } from "react";
 import { EditTaskFormProps } from "./types";
 import { Button } from "../../ui/Button/Button";
+import { TaskType } from "../../ui/Task/types";
 
 export const EditTaskForm = ({
     submit,
@@ -24,7 +25,7 @@ export const EditTaskForm = ({
         };
     const handleSelect: ChangeEventHandler<HTMLSelectElement> = (event) => {
         const { value } = event.target;
-        setForm({ ...form, taskType: value });
+        setForm({ ...form, taskType: value as TaskType });
     };
     const handleDateChange = (date: string) => {
         setForm({ ...form, date });

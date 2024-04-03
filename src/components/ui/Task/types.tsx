@@ -1,4 +1,4 @@
-import { FormState } from "../../Forms/EditTaskForm/types";
+import { EditTaskFormState } from "../../Forms/EditTaskForm/types";
 
 export type TaskType = "fitnessApp" | "newPayment" | "socialMedia";
 export interface TaskProps {
@@ -10,5 +10,15 @@ export interface TaskProps {
     taskType: TaskType;
     handleDelete: (taskId: string) => void;
     taskId: string;
-    submitEdit: (formState: FormState, taskId: string) => Promise<void>;
+    submitEdit: (formState: EditTaskFormState, taskId: string) => Promise<void>;
+}
+
+export interface ITask {
+    id: string;
+    title: string;
+    date: string;
+    startTime: string;
+    endTime: string;
+    complete: boolean;
+    taskType: TaskType;
 }

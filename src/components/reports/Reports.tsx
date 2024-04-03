@@ -1,7 +1,5 @@
 import * as echarts from "echarts";
-import axios from "axios";
 import { ChangeEventHandler, useEffect, useRef, useState } from "react";
-import { Task } from "../tasks/Tasks";
 import { MeetingType } from "../ui/Meeting/type";
 import { Select } from "../ui/Select/Select";
 import {
@@ -12,6 +10,8 @@ import {
     eachDayOfInterval,
     format,
 } from "date-fns";
+import { ITask } from "../ui/Task/types";
+import { reportsService } from "../../services/reportsService";
 interface ChartData {
     dates: string[];
     hours: number[];
@@ -27,7 +27,11 @@ interface ReportDetails {
 }
 type Period = "today" | "thisWeek" | "thisMonth";
 const getTimeStamp = (date: string) => new Date(date).getTime();
-const parseDayData = (date: string, tasks: Task[], meetings: MeetingType[]) => {
+const parseDayData = (
+    date: string,
+    tasks: ITask[],
+    meetings: MeetingType[]
+) => {
     const matchedTasks = tasks.filter((task) => task.date === date);
     const matchedMeetings = meetings.filter((meeting) => meeting.date === date);
     const taskTotalTime = matchedTasks.reduce((total, start) => {
@@ -51,7 +55,7 @@ const differenceInHours = (time1: string, time2: string) => {
 };
 const parseSpanData = (
     span: string[],
-    tasks: Task[],
+    tasks: ITask[],
     meetings: MeetingType[]
 ) => {
     const startDate = span[0];
@@ -118,7 +122,7 @@ const timePeriod = (period: Period) => {
     }
 };
 const getDayDetails = (
-    tasksAndMeetings: [Task[], MeetingType[]],
+    tasksAndMeetings: [ITask[], MeetingType[]],
     timePeriodValue: string[]
 ) => {
     const [tasks, meetings] = tasksAndMeetings;
@@ -156,7 +160,7 @@ export const Reports = () => {
     const [data, setData] = useState<ChartData | null>(null);
     const [select, setSelect] = useState<Period>("today");
     const [tasksAndMeetings, setTasksAndMeetings] = useState<
-        [Task[], MeetingType[]]
+        [ITask[], MeetingType[]]
     >([[], []]);
     const [report, setReport] = useState<ReportDetails[]>([]);
     const chartRef = useRef(null);
@@ -194,17 +198,9 @@ export const Reports = () => {
     };
     useEffect(() => {
         const getData = async () => {
-            try {
-                const data = await Promise.all([
-                    axios.get<Task[]>("http://localhost:8000/tasks"),
-                    axios.get<MeetingType[]>("http://localhost:8000/meetings"),
-                ]);
-                const [tasks, meetings] = data;
-                setTasksAndMeetings([tasks.data, meetings.data]);
-            } catch (error) {
-                console.log(error);
-                return [];
-            }
+            const data = await reportsService.getReport();
+            const [tasks, meetings] = data;
+            setTasksAndMeetings([tasks.data, meetings.data]);
         };
         getData();
     }, []);

@@ -4,13 +4,11 @@ import { Icon } from "../ui/Icon/Icon";
 import { Input } from "../ui/Input/Input";
 import { Modal } from "../ui/Modal/Modal";
 import { useModalState } from "../ui/Modal/hooks";
-import axios from "axios";
 import { FormState } from "../Forms/NewActivityForm/types";
-import { v4 as uuidv4 } from "uuid";
-import { getActivities } from "../../services/services";
 import { Activity } from "../Activity/Activity";
 import { ActivityType } from "./types";
 import { NewActivityForm } from "../Forms/NewActivityForm/NewActivityForm";
+import { activitiesService } from "../../services/activitiesService";
 
 export const Activities = () => {
     const [search, setSearch] = useState("");
@@ -18,7 +16,7 @@ export const Activities = () => {
     const [activities, setActivities] = useState<ActivityType[]>([]);
     useEffect(() => {
         const getActivitiesData = async () => {
-            const tasks = await getActivities();
+            const tasks = await activitiesService.getActivities();
             setActivities(tasks);
         };
         getActivitiesData();
@@ -28,19 +26,10 @@ export const Activities = () => {
         setSearch(value);
     };
     const submit = async (formState: FormState) => {
-        try {
-            await axios.post("http://localhost:8000/activities", {
-                id: uuidv4(),
-                title: formState.title,
-                content: formState.content,
-                createdAt: formState.createdAt,
-            });
-            const activities = await getActivities();
-            setActivities(activities);
-            handleModalClose();
-        } catch (error) {
-            console.log(error);
-        }
+        await activitiesService.createActivity(formState);
+        const activities = await activitiesService.getActivities();
+        setActivities(activities);
+        handleModalClose();
     };
     return (
         <section className="activities-section">

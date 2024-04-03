@@ -1,13 +1,9 @@
-export interface Task {
-    title: string;
-    date: string;
-    taskType: string;
-    startTime: string;
-    endTime: string;
-}
-export interface FormState extends Task {
+import { ITask } from "../../ui/Task/types";
+
+export interface NewTaskFormState
+    extends Omit<ITask, "id" | "complete" | "taskType"> {
     select: string;
 }
 export interface NewTaskFormProps {
-    submit: (formState: FormState) => Promise<void>;
+    submit: (formState: NewTaskFormState) => Promise<void>;
 }
