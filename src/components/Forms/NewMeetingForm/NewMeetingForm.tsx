@@ -24,7 +24,6 @@ export const NewMeetingForm = ({ submit }: NewMeetingFormProps) => {
         if (!form.title || !form.date || !form.startTime || !form.endTime) {
             return;
         }
-        console.log(handleSubmit);
         submit({
             ...form,
         });

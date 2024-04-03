@@ -1,4 +1,4 @@
-import { useState, ChangeEventHandler, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/Button/Button";
 import { Icon } from "../ui/Icon/Icon";
 import { Input } from "../ui/Input/Input";
@@ -9,11 +9,12 @@ import { Activity } from "../Activity/Activity";
 import { ActivityType } from "./types";
 import { NewActivityForm } from "../Forms/NewActivityForm/NewActivityForm";
 import { activitiesService } from "../../services/activitiesService";
+import { useSearch } from "../../hooks/useSearch";
 
 export const Activities = () => {
-    const [search, setSearch] = useState("");
     const { modalOpen, handleModalOpen, handleModalClose } = useModalState();
     const [activities, setActivities] = useState<ActivityType[]>([]);
+    const { search, handleSearch } = useSearch();
     useEffect(() => {
         const getActivitiesData = async () => {
             const tasks = await activitiesService.getActivities();
@@ -21,10 +22,6 @@ export const Activities = () => {
         };
         getActivitiesData();
     }, []);
-    const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
-        const { value } = event.target;
-        setSearch(value);
-    };
     const submit = async (formState: FormState) => {
         await activitiesService.createActivity(formState);
         const activities = await activitiesService.getActivities();

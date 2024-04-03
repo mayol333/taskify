@@ -9,14 +9,15 @@ import { NewMeetingForm } from "../Forms/NewMeetingForm/NewMeetingForm";
 import { NewMeetingFormState } from "../Forms/NewMeetingForm/types";
 import { MeetingType } from "../ui/Meeting/type";
 import { Meeting } from "../ui/Meeting/Meeting";
-import { parseISO } from "date-fns";
 import { meetingsService } from "../../services/meetingsService";
 import { EditMeetingFormState } from "../Forms/EditMeetingForm/types";
+import { useSearch } from "../../hooks/useSearch";
+import { sortMeetings } from "./utils";
 
 export const Meetings = () => {
-    const [searchMeeting, setMeetingSearch] = useState("");
     const { modalOpen, handleModalOpen, handleModalClose } = useModalState();
     const [sort, setSort] = useState("");
+    const { search, handleSearch } = useSearch();
     const [meetings, setMeetings] = useState<MeetingType[]>([]);
     useEffect(() => {
         const getMeetingsData = async () => {
@@ -25,10 +26,6 @@ export const Meetings = () => {
         };
         getMeetingsData();
     }, []);
-    const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
-        const { value } = event.target;
-        setMeetingSearch(value);
-    };
     const handleSelect: ChangeEventHandler<HTMLSelectElement> = (event) => {
         const { value } = event.target;
         setSort(value);
@@ -54,20 +51,7 @@ export const Meetings = () => {
         setMeetings(meetings);
         handleModalClose();
     };
-    const sortedMeetings = [...meetings].sort((a, b) => {
-        switch (sort) {
-            case "title_a_z":
-                return a.title.localeCompare(b.title);
-            case "title_z_a":
-                return b.title.localeCompare(a.title);
-            case "date_asc":
-                return parseISO(a.date).getTime() - parseISO(b.date).getTime();
-            case "date_desc":
-                return parseISO(b.date).getTime() - parseISO(a.date).getTime();
-            default:
-                return -1;
-        }
-    });
+    const sortedMeetings = sortMeetings(meetings, sort);
     return (
         <section className="meetings-section">
             <div className="meetings-header-container">
@@ -87,7 +71,7 @@ export const Meetings = () => {
                     <Input
                         placeholder="Search"
                         isSearch={true}
-                        value={searchMeeting}
+                        value={search}
                         onChange={handleSearch}
                     ></Input>
                     <Button onClick={handleModalOpen}>
@@ -105,7 +89,7 @@ export const Meetings = () => {
             <div>
                 {sortedMeetings
                     .filter((meeting) => {
-                        return meeting.title.includes(searchMeeting);
+                        return meeting.title.includes(search);
                     })
                     .map((meeting) => {
                         return (

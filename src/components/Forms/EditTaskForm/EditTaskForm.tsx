@@ -17,7 +17,6 @@ export const EditTaskForm = ({
     taskId,
 }: EditTaskFormProps) => {
     const [form, setForm] = useState(() => initialValues);
-    console.log(form.date);
     const handleForm =
         (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
             const { value } = event.target;
@@ -41,7 +40,6 @@ export const EditTaskForm = ({
         ) {
             return;
         }
-        console.log(handleSubmit);
         submit(
             {
                 ...form,

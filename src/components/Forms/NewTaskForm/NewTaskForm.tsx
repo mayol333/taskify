@@ -41,7 +41,6 @@ export const NewTaskForm = ({ submit }: NewTaskFormProps) => {
         ) {
             return;
         }
-        console.log(handleSubmit);
         submit({
             ...form,
             select: "",

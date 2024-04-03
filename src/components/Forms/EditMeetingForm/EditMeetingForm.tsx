@@ -9,7 +9,6 @@ export const EditMeetingForm = ({
     initialValues,
 }: EditMeetingFormProps) => {
     const [form, setForm] = useState(() => initialValues);
-    console.log(form.date);
     const handleForm =
         (key: string) => (event: ChangeEvent<HTMLInputElement>) => {
             const { value } = event.target;
@@ -23,7 +22,6 @@ export const EditMeetingForm = ({
         if (!form.title || !form.date || !form.startTime || !form.endTime) {
             return;
         }
-        console.log(handleSubmit);
         submit(
             {
                 ...form,

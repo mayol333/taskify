@@ -1,7 +1,7 @@
 import { Input } from "../ui/Input/Input";
 import { Button } from "../ui/Button/Button";
 import { Icon } from "../ui/Icon/Icon";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ITask } from "../ui/Task/types";
 import { Modal } from "../ui/Modal/Modal";
 import { useModalState } from "../ui/Modal/hooks";
@@ -10,10 +10,12 @@ import { NewTaskFormState } from "../Forms/NewTaskForm/types";
 import { EditTaskFormState } from "../Forms/EditTaskForm/types";
 import { tasksService } from "../../services/tasksService";
 import { Task } from "../ui/Task/Task";
+import { useSearch } from "../../hooks/useSearch";
 
 export const Tasks = () => {
     const { modalOpen, handleModalOpen, handleModalClose } = useModalState();
     const [tasks, setTasks] = useState<ITask[]>([]);
+    const { search, handleSearch } = useSearch();
     useEffect(() => {
         const getTasksData = async () => {
             const tasks = await tasksService.getTasks();
@@ -21,11 +23,6 @@ export const Tasks = () => {
         };
         getTasksData();
     }, []);
-    const [search, setSearch] = useState("");
-    const handleSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
-        const { value } = event.target;
-        setSearch(value);
-    };
     const submit = async (formState: NewTaskFormState) => {
         await tasksService.createTask(formState);
         const tasks = await tasksService.getTasks();
