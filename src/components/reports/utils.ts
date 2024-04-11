@@ -1,4 +1,11 @@
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, startOfMonth, endOfMonth } from "date-fns";
+import {
+    format,
+    startOfWeek,
+    endOfWeek,
+    eachDayOfInterval,
+    startOfMonth,
+    endOfMonth,
+} from "date-fns";
 import { MeetingType } from "../ui/Meeting/type";
 import { ITask } from "../ui/Task/types";
 import { Period } from "./types";
